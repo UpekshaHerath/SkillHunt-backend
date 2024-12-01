@@ -3,10 +3,10 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 const getAllJobs = async (req, res) => {
-  const users = await Job.find({ createdBy: req.user.userId }).sort(
+  const jobs = await Job.find({ createdBy: req.user.userId }).sort(
     "createdAt"
   );
-  res.status(StatusCodes.OK).json({ users, count: users.length });
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 
 const getJob = async (req, res) => {
