@@ -21,7 +21,7 @@ const updateUser = async (req, res) => {
       bio,
       country,
       city,
-      postalcode,
+      postalCode,
       CV_URL,
     } = req.body;
 
@@ -33,7 +33,7 @@ const updateUser = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { name, email, mobileNumber, bio, country, city, postalcode, CV_URL },
+      { name, email, mobileNumber, bio, country, city, postalCode, CV_URL },
       { new: true, runValidators: true }
     );
 

@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { getUser, updateUser } = require("../controllers/users");
 
-router.route("/").patch(updateUser).get(getUser);
+router.route("/").get(getUser).patch(updateUser);
 
 module.exports = router;
