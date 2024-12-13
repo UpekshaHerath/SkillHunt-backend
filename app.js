@@ -14,6 +14,7 @@ const authenticateUser = require("./middleware/authentication");
 const authRouter = require("./routes/auth");
 const jobsRouter = require("./routes/jobs");
 const usersRouter = require("./routes/users");
+const publicJobsRouter = require("./routes/publicJobs");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -32,6 +33,7 @@ app.use(
 // routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/public-job", publicJobsRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.use("/api/v1/users", authenticateUser, usersRouter);
 
