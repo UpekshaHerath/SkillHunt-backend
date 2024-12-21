@@ -1,11 +1,35 @@
 const Job = require("../models/Job");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
+const multer = require('multer');
 
 const getPublicJobs = async (req, res) => {
   const jobs = await Job.find({}).sort("createdAt");
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
+
+const imageTest = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  // Get the base URL from request
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  
+  // Generate the file URL
+  const fileUrl = `${baseUrl}/uploads/${req.file.destination.split('uploads/')[1]}/${req.file.filename}`;
+  
+  res.status(200).json({ 
+    message: 'File uploaded successfully!',
+    file: {
+      filename: req.file.filename,
+      path: req.file.path,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      url: fileUrl
+    }
+  });
+}
 
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ createdBy: req.user.userId }).sort("createdAt");
@@ -76,5 +100,6 @@ module.exports = {
   createJob,
   updateJob,
   deleteJob,
-  getPublicJobs
+  getPublicJobs, 
+  imageTest
 };

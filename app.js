@@ -2,6 +2,8 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+const { createFolderStructure } = require("./config/multer.config");
 const { specs, swaggerUi } = require("./swagger");
 const app = express();
 
@@ -30,6 +32,9 @@ app.use(
   })
 );
 
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // routes
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/v1/auth", authRouter);
@@ -39,6 +44,9 @@ app.use("/api/v1/users", authenticateUser, usersRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+
+// Create folder structure for uploads
+createFolderStructure();
 
 const port = process.env.PORT || 5000;
 
