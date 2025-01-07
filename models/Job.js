@@ -14,7 +14,7 @@ const JobSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["interview", "declined", "pending"],
+      enum: ["Interview", "Declined", "Pending", "Applied", "Rejected", "Accepted", "Withdrawn", "Offered", "Hired", "Not Hired"],
       default: "pending",
     },
     createdBy: {
@@ -22,6 +22,29 @@ const JobSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Please provide user"],
     },
+    location: {
+      type: String,
+      required: [true, "Please provide location"],
+      maxlength: 100,
+    },
+    salary: {
+      type: String,
+      required: [true, "Please provide salary"],
+    },
+    description: {
+      type: String,
+      required: [true, "Please provide description"],
+      maxlength: 5000,
+    },
+    jobType: {
+      type: String,
+      enum: ["full-time", "part-time", "freelance"],
+      default: "full-time",
+    },
+    requirements: {
+      type: [String],
+      required: [true, "Please provide requirements"],
+    }
   },
   { timestamps: true }
 );

@@ -24,6 +24,35 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please provide a password"],
     minlenght: 6,
   },
+  bio: {
+    type: String,
+    required: false,
+    maxlength: 500,
+  },
+  profilePicture: {
+    type: String,
+    required: false,
+  },
+  mobileNumber: {
+    type: String,
+    required: false,
+  },
+  country: {
+    type: String,
+    required: false,
+  },
+  city: {
+    type: String,
+    required: false,
+  },
+  postalCode: {
+    type: String,
+    required: false,
+  },
+  CV_URL: {
+    type: String,
+    required: false,
+  },
 });
 
 UserSchema.pre("save", async function () {
@@ -43,6 +72,6 @@ UserSchema.methods.createJWT = function () {
 
 UserSchema.methods.comparePasswords = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
-}
+};
 
 module.exports = mongoose.model("User", UserSchema);
