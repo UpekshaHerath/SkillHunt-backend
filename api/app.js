@@ -3,24 +3,24 @@ require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const { createFolderStructure } = require("./config/multer.config");
-const { specs, swaggerUi } = require("./swagger");
+const { createFolderStructure } = require("../config/multer.config");
+const { specs, swaggerUi } = require("../swagger");
 const app = express();
 
 // connect DB
-const connectDB = require("./db/connect");
+const connectDB = require("../db/connect");
 
-const authenticateUser = require("./middleware/authentication");
+const authenticateUser = require("../middleware/authentication");
 
 // routers
-const authRouter = require("./routes/auth");
-const jobsRouter = require("./routes/jobs");
-const usersRouter = require("./routes/users");
-const publicJobsRouter = require("./routes/publicJobs");
+const authRouter = require("../routes/auth");
+const jobsRouter = require("../routes/jobs");
+const usersRouter = require("../routes/users");
+const publicJobsRouter = require("../routes/publicJobs");
 
 // error handler
-const notFoundMiddleware = require("./middleware/not-found");
-const errorHandlerMiddleware = require("./middleware/error-handler");
+const notFoundMiddleware = require("../middleware/not-found");
+const errorHandlerMiddleware = require("../middleware/error-handler");
 
 app.use(express.json());
 
@@ -48,7 +48,7 @@ app.use(errorHandlerMiddleware);
 // Create folder structure for uploads
 createFolderStructure();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
