@@ -2,6 +2,7 @@ const Job = require("../models/Job");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const multer = require("multer");
+const { generateFileURL } = require("../helper/file.helper");
 
 const getPublicJobs = async (req, res) => {
   const jobs = await Job.find({}).sort("createdAt");
@@ -17,9 +18,7 @@ const imageTest = async (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
   // Generate the file URL
-  const fileUrl = `${baseUrl}/uploads/${
-    req.file.destination.split("uploads/")[1]
-  }/${req.file.filename}`;
+  const fileUrl = generateFileURL(baseUrl, req.file);
 
   res.status(200).json({
     message: "File uploaded successfully!",

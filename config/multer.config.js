@@ -16,12 +16,12 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     console.log('File Type:', file.mimetype);
     const fileType = file.mimetype.split("/")[0]; // e.g., 'image', 'application'
-    let folder = "uploads/others"; // Default folder
+    let folder = "uploads/others"; 
     if (fileType === "image") {
       folder = "uploads/images";
     } else if (fileType === "application") {
       folder = "uploads/documents";
-    }
+    } 
     cb(null, folder);
   },
   filename: (req, file, cb) => {
