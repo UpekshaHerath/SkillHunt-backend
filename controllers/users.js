@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
+const { generateFileURL } = require("../helper/file.helper");
 
 const getUser = async (req, res) => {
   const user = await User.findById(req.user.userId).lean();
@@ -14,7 +15,7 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { userId } = req.user;
-    const {
+    let {
       name,
       email,
       mobileNumber,
@@ -31,7 +32,12 @@ const updateUser = async (req, res) => {
         .json({ msg: "Name and email are required." });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
+    if (req.file) {
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      CV_URL = generateFileURL(baseUrl, req.file);
+    }
+
+    let updatedUser = await User.findByIdAndUpdate(
       userId,
       { name, email, mobileNumber, bio, country, city, postalCode, CV_URL },
       { new: true, runValidators: true }
